@@ -24,3 +24,4 @@ if __name__ == '__main__':
     add_namespaces()
 
     app.run(host=config.API_HOST, port=config.API_PORT, debug=config.DEBUG)
+

@@ -1,6 +1,8 @@
 from flask import Blueprint, request, Response
 from flask_restx import Namespace, Resource, fields
-from dtos.UsuarioDTO import ErroDTO
+
+import config
+from dtos.ErroDTO import ErroDTO
 
 import json
 
@@ -25,14 +27,33 @@ class Login(Resource):
     @api.doc(responses={500: 'Não foi possível efetuar o login, tente novamente.'})
     @api.response(200, 'Success', user_fields)
     @api.expect(login_fields)
+
     def post(self):
         try:
             body = request.get_json()
 
             if not body or 'login' not in body or 'senha' not in body:
-                return Response(json.dumps(ErroDTO('Parâmetros de entrada inválidos', 400).__dict__),status=400, mimetype='application/json')
+                return Response(
+                                json.dumps(ErroDTO('Parâmetros de entrada inválidos', 400).__dict__),
+                                status=400,
+                                mimetype='application/json'
+                                )
 
-            return Response('Login autenticado com sucesso', status=200, mimetype='application/json')
-        except Exception as e:
-            return Response(json.dumps(ErroDTO('Não foi possível efetuar o login, tente novamente', 500).__dict__), status=500, mimetype='application/jason')
+            if body['login'] == config.LOGIN_TESTE and body['senha'] == config.SENHA_TESTE:
+                return Response(
+                                'Login autenticado com sucesso',
+                                status=200,
+                                mimetype='application/json'
+                                )
+            return Response(
+                json.dumps(ErroDTO('Usuário ou senha incorretos, favor tentar novamente', 401).__dict__),
+                status=200,
+                mimetype='application/json'
+             )
 
+        except Exception:
+            return Response(
+                            json.dumps(ErroDTO('Não foi possível efetuar o login, tente novamente', 500).__dict__),
+                            status=500,
+                            mimetype='application/jason'
+                            )
