@@ -6,6 +6,9 @@ from dtos.ErroDTO import ErroDTO
 
 import json
 
+from dtos.UsuarioDTO import UsuarioLoginDTO
+from services import JWTService
+
 login_controller = Blueprint('login_controller', __name__)
 
 api = Namespace('Login', description='Realizar login na aplicação')
@@ -40,8 +43,12 @@ class Login(Resource):
                                 )
 
             if body['login'] == config.LOGIN_TESTE and body['senha'] == config.SENHA_TESTE:
+                id_usuario = 1
+
+                token = JWTService.gerar_token(id_usuario)
+
                 return Response(
-                                'Login autenticado com sucesso',
+                                json.dumps(UsuarioLoginDTO("Admin", config.LOGIN_TESTE, token).__dict__),
                                 status=200,
                                 mimetype='application/json'
                                 )
