@@ -12,17 +12,17 @@ class UsuarioService:
         usuario = db.query(Usuario).filter(Usuario.email == email).first()
 
         if not usuario:
-            return  None
+            return None
         if not verificar_senha(senha, usuario.senha):
             return None
 
         return usuario
 
-    def filter_by_email(self,id):
-        return db.query(Usuario).filter(Usuario.id == id)  .first()
-
-    def filter_by_id(self, email):
+    def filter_by_email(self, email):
         return db.query(Usuario).filter(Usuario.email == email).first()
+
+    def filter_by_id(self, id):
+        return db.query(Usuario).filter(Usuario.id == id).first()
 
     def criar_usuario(self, nome, email, senha):
         if self.filter_by_email(email):
@@ -34,4 +34,3 @@ class UsuarioService:
         db.commit()
 
         return novo_usuario
-
