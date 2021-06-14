@@ -1,14 +1,10 @@
-import json
-
 from flask import Blueprint, Response, request
 from flask_restx import Namespace, Resource, fields
-
-import config
 from dtos.ErroDTO import ErroDTO
 from dtos.UsuarioDTO import UsuarioBaseDTO, UsuarioCreateDTO
 from services.UsuarioService import UsuarioService
-from utils import Decorators
-from utils.Criptografia import criptografar_senha
+
+import json
 
 usuario_controller = Blueprint('usuario_controller', __name__)
 
