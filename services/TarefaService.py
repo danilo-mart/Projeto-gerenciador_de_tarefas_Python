@@ -65,3 +65,4 @@ class TarefaService:
         db.commit()
 
         return True
+

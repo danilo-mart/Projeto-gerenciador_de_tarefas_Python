@@ -34,3 +34,4 @@ class UsuarioService:
         db.commit()
 
         return novo_usuario
+
