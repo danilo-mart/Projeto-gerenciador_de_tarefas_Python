@@ -67,10 +67,11 @@ class Login(Resource):
                 )
 
             return Response(
-                json.dumps(ErroDTO(401, 'Usuário ou Senha incorretos, favor tentar novamente.').__dict__),
+                json.dumps(ErroDTO(401, "Usuário ou Senha incorretos, favor tentar novamente.").__dict__),
                 status=401,
                 mimetype='application/json')
-        except Exception:
+        except Exception as e:
+            print(e)
             return Response(
                 json.dumps(ErroDTO(500, "Não foi possível efetuar o login, tente novamente.").__dict__),
                 status=500,

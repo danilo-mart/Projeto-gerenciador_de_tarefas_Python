@@ -1,9 +1,6 @@
 import datetime
-
 import jwt
-
 import config
-
 
 def gerar_token(id_usuario):
     try:
@@ -15,14 +12,14 @@ def gerar_token(id_usuario):
         return jwt.encode(
             payload,
             config.SECRET_KEY,
-            algorithm='HS256'
+            algorithm="HS256"
         )
     except Exception:
         raise Exception
 
-def decodifacar_token(token):
+def decodificar_token(token):
     try:
-        payload = jwt.decode(token, config.SECRET_KEY, algorithms=['HS256'])
+        payload = jwt.decode(token, config.SECRET_KEY, algorithms=["HS256"])
 
         return payload['id_usuario']
     except jwt.ExpiredSignatureError:
